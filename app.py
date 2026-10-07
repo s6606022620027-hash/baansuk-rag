@@ -16,7 +16,7 @@ EMBED_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"  # เล็ก รอง�
 LLM_MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"]
 CHUNK_SIZE, OVERLAP = 450, 80
 
-SYSTEM_PROMPT = """คุณคือ "บ้านฟ้า" ผู้ช่วยตอบคำถามคู่มือเครื่องใช้ไฟฟ้าแบรนด์ BaanSuk (บ้านสุข)
+SYSTEM_PROMPT = """คุณคือ "น้องสุข" ผู้ช่วยตอบคำถามคู่มือเครื่องใช้ไฟฟ้าแบรนด์ BaanSuk (บ้านสุข)
 กฎที่ต้องทำตามอย่างเคร่งครัด:
 1. ตอบจาก [บริบท] ที่ให้มาเท่านั้น ห้ามใช้ความรู้ภายนอกหรือเดาเอง
 2. ถ้าบริบทไม่มีข้อมูลที่ตอบคำถามได้ ให้ตอบว่า "ไม่พบข้อมูลในคู่มือ" และแนะนำให้โทรศูนย์บริการ ห้ามแต่งคำตอบ
@@ -148,7 +148,7 @@ def ask_llm(question, history, hits, product=None):
     raise last_err
 
 
-st.set_page_config(page_title="บ้านฟ้า - ผู้ช่วยคู่มือ BaanSuk", page_icon="🏠")
+st.set_page_config(page_title="น้องสุข - ผู้ช่วยคู่มือ BaanSuk", page_icon="🏠")
 inject_css()
 hero()
 

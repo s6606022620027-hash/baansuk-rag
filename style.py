@@ -1,4 +1,4 @@
-"""ธีมและคอมโพเนนต์ตกแต่งหน้าเว็บ (CSS + HTML) ของบ้านฟ้า"""
+"""ธีมและคอมโพเนนต์ตกแต่งหน้าเว็บ (CSS + HTML) ของน้องสุข"""
 import html
 
 import streamlit as st
@@ -61,7 +61,7 @@ def inject_css():
 def hero():
     st.markdown(
         """<div class="hero"><div class="hero-badge">🏠</div><div>
-<div class="hero-title">บ้านฟ้า</div>
+<div class="hero-title">น้องสุข</div>
 <div class="hero-sub">ผู้ช่วยคู่มือเครื่องใช้ไฟฟ้า BaanSuk · ถามได้ทั้งไทยและอังกฤษ</div></div></div>
 <div class="chips"><span>📖 ตอบจากคู่มือจริง</span><span>🔎 แสดงแหล่งอ้างอิงทุกคำตอบ</span>
 <span>🛡️ ไม่เดา ไม่แต่งข้อมูล</span></div>""",
