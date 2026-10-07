@@ -10,7 +10,8 @@ from sentence_transformers import SentenceTransformer
 
 DATA_DIR = Path(__file__).parent / "data"
 EMBED_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"  # เล็ก รองรับไทย/อังกฤษ
-LLM_MODEL = "llama-3.3-70b-versatile"
+# ลองตามลำดับ: ถ้าโมเดลแรกใช้ไม่ได้ (เช่น ถูกถอด) จะข้ามไปตัวถัดไป
+LLM_MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b"]
 CHUNK_SIZE, OVERLAP = 450, 80
 
 SYSTEM_PROMPT = """คุณคือ "น้องสุข" ผู้ช่วยตอบคำถามคู่มือเครื่องใช้ไฟฟ้าแบรนด์ BaanSuk (บ้านสุข)
@@ -91,10 +92,20 @@ def ask_llm(question, history, hits):
         {"role": "user", "content": f"[บริบท]\n{context}\n\n[คำถาม]\n{question}"}
     )
     client = Groq(api_key=st.secrets["GROQ_API_KEY"])
-    res = client.chat.completions.create(
-        model=LLM_MODEL, messages=msgs, temperature=0.1, max_tokens=700
-    )
-    return res.choices[0].message.content
+    last_err = None
+    for model_name in LLM_MODELS:
+        try:
+            res = client.chat.completions.create(
+                model=model_name,
+                messages=msgs,
+                temperature=0.1,
+                max_completion_tokens=2000,  # เผื่อโทเคนส่วนการให้เหตุผลของโมเดล
+                extra_body={"reasoning_effort": "low"},
+            )
+            return res.choices[0].message.content
+        except Exception as e:  # noqa: BLE001
+            last_err = e
+    raise last_err
 
 
 def show_sources(hits):
